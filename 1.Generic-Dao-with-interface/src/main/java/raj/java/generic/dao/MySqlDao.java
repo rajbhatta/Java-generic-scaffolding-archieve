@@ -2,6 +2,7 @@ package raj.java.generic.dao;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 import raj.java.generic.config.PropertyService;
+import raj.java.generic.exception.MySqlException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -20,22 +21,22 @@ public class MySqlDao<T> implements SqlDao<T> {
         this.password = password;
     }
 
-    public void save(T t) throws SQLException {
+    public void save(T t) throws MySqlException {
         Statement statement=createStatement();
 
         //TODO: excecute here
 
     }
 
-    public List<T> get() {
+    public List<T> get() throws MySqlException {
         return null;
     }
 
-    public T getById(T t) {
+    public T getById(T t) throws MySqlException {
         return null;
     }
 
-    public void delete(T t) {
+    public void delete(T t) throws MySqlException {
 
     }
 
@@ -47,18 +48,32 @@ public class MySqlDao<T> implements SqlDao<T> {
         return dataSource;
     }
 
-    private Connection createConnection() throws SQLException {
-        Connection conn = createMysqlDataSource().getConnection();
-        return conn;
+    private Connection createConnection() throws MySqlException {
+
+        try {
+            return createMysqlDataSource().getConnection();
+        } catch (SQLException e) {
+           throw new MySqlException("Error creating a connection",e.getCause());
+        }
     }
 
-    private Statement createStatement() throws SQLException {
-        return createConnection().createStatement();
+    private Statement createStatement() throws MySqlException {
+        try {
+            return createConnection().createStatement();
+        } catch (SQLException e) {
+            throw new MySqlException("Error creating a statement");
+        }
     }
 
-    private void closeConnection() throws SQLException {
-        createConnection().close();
-        createStatement().close();;
+    private void closeConnection() throws MySqlException {
+
+        try {
+            createConnection().close();
+            createStatement().close();
+        } catch (SQLException e) {
+            throw new MySqlException("Error closing a connection");
+        }
+        ;
     }
 
 }
