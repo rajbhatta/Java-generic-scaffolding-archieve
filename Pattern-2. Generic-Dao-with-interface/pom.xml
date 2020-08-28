@@ -4,9 +4,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>raj.design.pattern</groupId>
-    <artifactId>DesignPattern</artifactId>
+    <groupId>raj.javageneric</groupId>
+    <artifactId>JavaGeneric</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.21</version>
+        </dependency>
+
+    </dependencies>
 
 
 </project>
