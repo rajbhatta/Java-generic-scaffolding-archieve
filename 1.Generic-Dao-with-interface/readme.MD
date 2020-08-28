@@ -40,15 +40,18 @@ public class DatabasePropertyService implements PropertyService {
 
 package raj.java.generic.dao;
 
+import raj.java.generic.exception.MySqlException;
+
 import java.sql.SQLException;
 import java.util.List;
 
 public interface SqlDao<T> {
-    void save(T t) throws SQLException;
-    List<T> get();
-    T getById(T t);
-    void delete(T t);
+    void save(T t) throws MySqlException;
+    List<T> get() throws MySqlException;
+    T getById(T t) throws MySqlException;
+    void delete(T t) throws MySqlException;
 }
+
 ```
 
 ```js
@@ -57,6 +60,7 @@ package raj.java.generic.dao;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 import raj.java.generic.config.PropertyService;
+import raj.java.generic.exception.MySqlException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -75,22 +79,22 @@ public class MySqlDao<T> implements SqlDao<T> {
         this.password = password;
     }
 
-    public void save(T t) throws SQLException {
+    public void save(T t) throws MySqlException {
         Statement statement=createStatement();
 
         //TODO: excecute here
 
     }
 
-    public List<T> get() {
+    public List<T> get() throws MySqlException {
         return null;
     }
 
-    public T getById(T t) {
+    public T getById(T t) throws MySqlException {
         return null;
     }
 
-    public void delete(T t) {
+    public void delete(T t) throws MySqlException {
 
     }
 
@@ -102,20 +106,32 @@ public class MySqlDao<T> implements SqlDao<T> {
         return dataSource;
     }
 
-    private Connection createConnection() throws SQLException {
-        Connection conn = createMysqlDataSource().getConnection();
-        return conn;
+    private Connection createConnection() throws MySqlException {
+
+        try {
+            return createMysqlDataSource().getConnection();
+        } catch (SQLException e) {
+           throw new MySqlException("Error creating a connection",e.getCause());
+        }
     }
 
-    private Statement createStatement() throws SQLException {
-        return createConnection().createStatement();
+    private Statement createStatement() throws MySqlException {
+        try {
+            return createConnection().createStatement();
+        } catch (SQLException e) {
+            throw new MySqlException("Error creating a statement");
+        }
     }
 
-    private void closeConnection() throws SQLException {
-        createConnection().close();
-        createStatement().close();;
-    }
+    private void closeConnection() throws MySqlException {
 
+        try {
+            createConnection().close();
+            createStatement().close();
+        } catch (SQLException e) {
+            throw new MySqlException("Error closing a connection");
+        }
+    }
 }
 ```
 
@@ -196,6 +212,42 @@ public class HotelCustomerService implements CustomerService{
     }
 
     public void delete(Customer customer) {
+
+    }
+}
+```
+
+```js
+8.
+
+package raj.java.generic;
+
+import raj.java.generic.config.DatabasePropertyService;
+import raj.java.generic.config.PropertyService;
+import raj.java.generic.exception.MySqlException;
+import raj.java.generic.model.Customer;
+import raj.java.generic.service.CustomerService;
+import raj.java.generic.service.HotelCustomerService;
+
+import java.sql.SQLException;
+import java.util.UUID;
+
+public class NexusController {
+
+    public static void main(String[] args) throws MySqlException {
+
+        //Custom Dependency Injection
+        PropertyService propertyService=new DatabasePropertyService();
+
+        //Property service is injected here, we can use Dagger2 or other dependency injection framework here.
+        CustomerService customerService=new HotelCustomerService(propertyService);
+
+        Customer customer=new Customer();
+        customer.setFirstName(UUID.randomUUID().toString());
+        customer.setLastName(UUID.randomUUID().toString());
+
+        customerService.save(customer);
+
 
     }
 }
