@@ -93,6 +93,7 @@ public class MySqlDao<T> implements SqlConnectionFactory<T> {
     //HotelCustomer implements SqlDao. So, we can return instance of HotelCustomerDao
     public SqlDao<T> getStatementForDatabase() throws MySqlException {
         createConnection();
+        createStatement();
         return new HotelCustomerServiceMySql<T>(statement);
     }
 }
