@@ -206,5 +206,5 @@ public class NexusController {
 ```
 
 ### How I have designed this project ###
-![alt text] (https://github.com/rajbhatta/Java-Generic-Design-Example/blob/master/Pattern-2.%20Generic-Dao-with-interface/How-this-project-is-designed.jpg)
+<img src="https://github.com/rajbhatta/Java-Generic-Design-Example/blob/master/Pattern-2.%20Generic-Dao-with-interface/How-this-project-is-designed.jpg">
 
