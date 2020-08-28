@@ -1,4 +1,4 @@
-## How to code is designed here ## 
+## How code is designed here ## 
 ```js
 public interface SqlDao<T> {
     void save(T t) throws MySqlException;
