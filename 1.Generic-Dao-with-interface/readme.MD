@@ -137,6 +137,85 @@ public class MySqlDao<T> implements SqlDao<T> {
 
 ```js
 5.
+package raj.java.generic.dao;
+
+import raj.java.generic.exception.MySqlException;
+
+import java.util.List;
+
+public class OracleSqlDao<T> implements SqlDao<T> {
+
+    private String hostUrl;
+    private String userName;
+    private String password;
+
+    public OracleSqlDao(String hostUrl, String userName, String password) {
+        this.hostUrl = hostUrl;
+        this.userName = userName;
+        this.password = password;
+    }
+
+
+    public void save(T t) throws MySqlException {
+
+    }
+
+    public List<T> get() throws MySqlException {
+        return null;
+    }
+
+    public T getById(T t) throws MySqlException {
+        return null;
+    }
+
+    public void delete(T t) throws MySqlException {
+
+    }
+}
+```
+
+```js
+6.
+package raj.java.generic.dao;
+
+import raj.java.generic.exception.MySqlException;
+
+import java.util.List;
+
+public class MsSqlDao<T> implements SqlDao<T> {
+
+    private String hostUrl;
+    private String userName;
+    private String password;
+
+    public MsSqlDao(String hostUrl, String userName, String password) {
+        this.hostUrl = hostUrl;
+        this.userName = userName;
+        this.password = password;
+    }
+
+    public void save(T t) throws MySqlException {
+
+    }
+
+    public List<T> get() throws MySqlException {
+        return null;
+    }
+
+    public T getById(T t) throws MySqlException {
+        return null;
+    }
+
+    public void delete(T t) throws MySqlException {
+
+    }
+}
+```
+
+
+
+```js
+7.
 package raj.java.generic.model;
 
 public class Customer {
@@ -162,7 +241,7 @@ public class Customer {
 ```
 
 ```js
-6. 
+8. 
 package raj.java.generic.service;
 
 import raj.java.generic.dao.SqlDao;
@@ -174,7 +253,7 @@ public interface CustomerService extends SqlDao<Customer> {
 ```
 
 ```js
-7.
+8.
 package raj.java.generic.service;
 
 import raj.java.generic.config.PropertyService;
@@ -218,7 +297,96 @@ public class HotelCustomerService implements CustomerService{
 ```
 
 ```js
-8.
+9.
+
+package raj.java.generic.service;
+
+import raj.java.generic.config.PropertyService;
+import raj.java.generic.dao.MsSqlDao;
+import raj.java.generic.dao.SqlDao;
+import raj.java.generic.exception.MySqlException;
+import raj.java.generic.model.Customer;
+
+import java.util.List;
+
+public class HotelCustomerServiceMsSql implements CustomerService {
+
+    PropertyService propertyService;
+    SqlDao sqlDao;
+
+    public HotelCustomerServiceMsSql(PropertyService propertyService) {
+        this.propertyService = propertyService;
+        sqlDao=new MsSqlDao(propertyService.getMysqlHostUrl(),propertyService.getMysqlUserName(),propertyService.getMySqlPassword());
+    }
+
+    public void checkCustomerCredit(Customer customer) {
+
+    }
+
+    public void save(Customer customer) throws MySqlException {
+
+    }
+
+    public List<Customer> get() throws MySqlException {
+        return null;
+    }
+
+    public Customer getById(Customer customer) throws MySqlException {
+        return null;
+    }
+
+    public void delete(Customer customer) throws MySqlException {
+
+    }
+}
+```
+
+```js
+10.
+package raj.java.generic.service;
+
+import raj.java.generic.config.PropertyService;
+import raj.java.generic.dao.OracleSqlDao;
+import raj.java.generic.dao.SqlDao;
+import raj.java.generic.exception.MySqlException;
+import raj.java.generic.model.Customer;
+
+import java.util.List;
+
+public class HotelCustomerServiceOracle implements CustomerService {
+
+    PropertyService propertyService;
+    SqlDao sqlDao;
+
+    public HotelCustomerServiceOracle(PropertyService propertyService) {
+        this.propertyService = propertyService;
+        sqlDao=new OracleSqlDao(propertyService.getMysqlHostUrl(),propertyService.getMysqlUserName(),propertyService.getMySqlPassword());
+    }
+
+    public void checkCustomerCredit(Customer customer) {
+
+    }
+
+    public void save(Customer customer) throws MySqlException {
+
+    }
+
+    public List<Customer> get() throws MySqlException {
+        return null;
+    }
+
+    public Customer getById(Customer customer) throws MySqlException {
+        return null;
+    }
+
+    public void delete(Customer customer) throws MySqlException {
+
+    }
+}
+```
+
+```js
+11.
 
 package raj.java.generic;
 
@@ -252,6 +420,7 @@ public class NexusController {
     }
 }
 ```
+
 
 
 
