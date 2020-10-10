@@ -1,21 +1,21 @@
 package raj.java.generic.exception;
 
-public class MySqlException extends Exception {
-  public MySqlException() {}
+public class OracleException extends Exception {
+  public OracleException() {}
 
-  public MySqlException(String message) {
+  public OracleException(String message) {
     super(message);
   }
 
-  public MySqlException(String message, Throwable cause) {
+  public OracleException(String message, Throwable cause) {
     super(message, cause);
   }
 
-  public MySqlException(Throwable cause) {
+  public OracleException(Throwable cause) {
     super(cause);
   }
 
-  public MySqlException(
+  public OracleException(
       String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
     super(message, cause, enableSuppression, writableStackTrace);
   }
