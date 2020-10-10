@@ -13,8 +13,7 @@ public class NexusController {
 		customer.setPhoneNumber(null);
 		
 		ValidationWrapper validationWrapper=new ValidationWrapper(customer,new CustomerValidationFactory());
-		
-		
+		validationWrapper.validate();
 		
 	}
 
