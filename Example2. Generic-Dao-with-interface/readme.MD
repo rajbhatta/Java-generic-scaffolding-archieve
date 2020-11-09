@@ -206,6 +206,4 @@ public class NexusController {
 }
 ```
 
-### How I have designed this project ? ###
-<img src="How-this-project-is-designed.jpg">
 
